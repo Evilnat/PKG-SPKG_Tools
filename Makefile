@@ -24,9 +24,10 @@ OBJS	= $(COMMON) $(addsuffix .o, $(TOOLS))
 
 all: $(TOOLS)
 
-$(TOOLS): %: %.o $(COMMON) $(DEPS)
+$(TOOLS): %: %.o $(COMMON) $(DEPS)	
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@$(SUFFIX) $< $(COMMON) $(LDLIBS)
-	-mv $(SOURCE)*.exe $(BUILD)
+	@mkdir -p build
+	@-mv $(SOURCE)*.exe $(BUILD)
 	
 
 $(OBJS): %.o: %.c $(DEPS)
@@ -34,5 +35,6 @@ $(OBJS): %.o: %.c $(DEPS)
 	
 
 clean:
-	-rm -f $(OBJS) $(TOOLS)
-	-rm -f $(BUILD)*.*
+	@-rm -f $(OBJS) $(TOOLS)
+	@-rm -f $(BUILD)*.*
+	@-rm -f -r build
